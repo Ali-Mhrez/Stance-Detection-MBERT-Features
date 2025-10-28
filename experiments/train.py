@@ -3,6 +3,7 @@ import torch
 import argparse
 from torch.optim import AdamW
 from ..models.bert_cnn import BERTCNN
+from ..models.bert_lstm import BERTLSTM
 from torch.utils.data import DataLoader
 from ..data.custom_dataset import CustomDataset
 from transformers import AutoTokenizer, AutoModel
@@ -21,7 +22,7 @@ if __name__ == "__main__":
     
     parser = argparse.ArgumentParser(description="Run fine tuning experiments.")
     parser.add_argument('--dataset', type=str, choices=['arastance', 'unifiedfc'], required=True, help='Dataset to use for fine-tuning.')
-    parser.add_argument('--model-name', type=str, choices=['bertcnn'], required=True, help='Model name to use.')
+    parser.add_argument('--model-name', type=str, choices=['bertcnn', 'bertlstm'], required=True, help='Model name to use.')
     parser.add_argument('--setting', type=str, choices=['last-layer', 'last-4-layers'], required=True, help='BERT layer setting.')
     args = parser.parse_args()
     dataset = args.dataset
@@ -82,6 +83,8 @@ if __name__ == "__main__":
         device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
         if args.model_name == 'bertcnn':
             model = BERTCNN(pretrained_model, sequence_length, setting)
+        elif args.model_name == 'bertlstm':
+            model = BERTLSTM(pretrained_model, setting)
         loss_fn = torch.nn.CrossEntropyLoss()
         optimizer = AdamW(model.parameters(), lr=lr)
         manager = TrainingManager(model, optimizer, loss_fn, device)
