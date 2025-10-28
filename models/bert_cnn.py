@@ -1,9 +1,9 @@
 import torch
 import torch.nn as nn
 
-class Model(nn.Module):
+class BERTCNN(nn.Module):
   def __init__(self, pretrained_model, sequence_length, setting='last-layer'):
-    super(Model, self).__init__()
+    super(BERTCNN, self).__init__()
     
     assert setting in ['last-layer', 'last-4-layers'], "Setting must be either 'last-layer' or 'last-4-layers'"
     
