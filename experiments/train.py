@@ -2,7 +2,7 @@ import os
 import torch
 import argparse
 from torch.optim import AdamW
-from ..modles.bert_cnn import BERTCNN
+from ..models.bert_cnn import BERTCNN
 from torch.utils.data import DataLoader
 from ..data.custom_dataset import CustomDataset
 from transformers import AutoTokenizer, AutoModel
