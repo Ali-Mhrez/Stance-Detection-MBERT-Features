@@ -66,7 +66,7 @@ if __name__ == "__main__":
     test_dataset = CustomDataset(test_encodings, test_labels)
     print("Tokenization completed.")
     
-    print("Starting model fine-tuning...")
+    print("Starting model training...")
     for rep in range(no_reps):
         
         print(f"\n--- Repetition {rep+1} of {no_reps} ---")
