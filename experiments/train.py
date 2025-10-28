@@ -12,11 +12,11 @@ from ..data.dataset_reader import AraStanceReader, UnifiedFCReader, stance_to_in
 
 if __name__ == "__main__":
     
-    lr = 2e-5
+    lr = 1e-4
     no_reps = 5
-    no_epochs = 15
-    batch_size = 32
-    sequence_length = 512
+    no_epochs = 25
+    batch_size = 64
+    sequence_length = 256
     seeds = [42, 43, 44, 45, 46]
     
     parser = argparse.ArgumentParser(description="Run fine tuning experiments.")
