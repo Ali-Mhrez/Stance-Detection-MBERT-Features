@@ -3,7 +3,7 @@ import torch.nn as nn
 
 class BERTLSTM(nn.Module):
   def __init__(self, pretrained_model, setting='last-layer'):
-    super(Model, self).__init__()
+    super(BERTLSTM, self).__init__()
     
     assert setting in ['last-layer', 'last-4-layers'], "Setting must be either 'last-layer' or 'last-4-layers'"
     self.setting = setting
