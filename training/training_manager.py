@@ -36,7 +36,7 @@ class TrainingManager:
             progress_bar.update(1)
             
             total_loss += loss.item()
-            accuracy += (logits.argmax(dim=1) == batch["labels"]).sum().item()
+            accuracy += (logits.argmax(dim=1) == labels).sum().item()
         return total_loss / len(dataloader), accuracy / len(dataloader.dataset)
     
     def evaluate(self, dataloader):
@@ -57,7 +57,7 @@ class TrainingManager:
                 
             total_loss += loss.item()
             predictions = logits.argmax(dim=1)
-            accuracy += (predictions == batch["labels"]).sum().item()
+            accuracy += (predictions == labels).sum().item()
             all_preds = np.concatenate((all_preds, predictions.cpu().numpy()))
             
         f1scores= f1_score(dataloader.dataset.labels, all_preds, average=None)
