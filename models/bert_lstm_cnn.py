@@ -20,9 +20,9 @@ class BERTLSTMCNN(nn.Module):
     self.conv1 = nn.Conv1d(in_channels=64, out_channels=50, kernel_size=2)
     self.conv2 = nn.Conv1d(in_channels=64, out_channels=50, kernel_size=3)
     self.conv3 = nn.Conv1d(in_channels=64, out_channels=50, kernel_size=4)
-    self.pool1 = nn.MaxPool1d(kernel_size=sequence_length-1)
-    self.pool2 = nn.MaxPool1d(kernel_size=sequence_length-2)
-    self.pool3 = nn.MaxPool1d(kernel_size=sequence_length-3)
+    self.pool1 = nn.MaxPool1d(kernel_size=self.sequence_length-1)
+    self.pool2 = nn.MaxPool1d(kernel_size=self.sequence_length-2)
+    self.pool3 = nn.MaxPool1d(kernel_size=self.sequence_length-3)
     self.dropout = nn.Dropout(p=0.2)
     self.classifier = nn.Linear(in_features=150, out_features=4)
 
