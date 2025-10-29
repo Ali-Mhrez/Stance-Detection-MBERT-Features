@@ -21,18 +21,18 @@ class BERTLSTM(nn.Module):
   def forward(self, inputs):
       
     if self.setting == 'last-layer':
-        encoder_outputs = self.pretrained_model(**inputs)['hidden_states'][12]
+        encoder_outputs = self.pretrained_model(**inputs)['hidden_states'][12]         # (B, S, 768)
     else:
         encoder_outputs = self.pretrained_model(**inputs)['hidden_states']
         l12_outputs = encoder_outputs[12]
         l11_outputs = encoder_outputs[11]
         l10_outputs = encoder_outputs[10]
         l9_outputs = encoder_outputs[9]
-        encoder_outputs = torch.cat((l9_outputs, l10_outputs, l11_outputs, l12_outputs), dim=1)																					 
-    sequence, (_, _) = self.bilstm1(encoder_outputs)
-    _, (h, _) = self.bilstm2(sequence)
-    h = h.permute(1,0,2)
-    h = h.reshape(h.shape[0], -1)
-    logits = self.classifier(h)
+        encoder_outputs = torch.cat((l9_outputs, l10_outputs, l11_outputs, l12_outputs), dim=1)  #      (B, S*4, 768)
+    sequence, (_, _) = self.bilstm1(encoder_outputs)                                   # (B, S, 64) or  (B, S*4, 64)
+    _, (h, _) = self.bilstm2(sequence)                                                 # (2, B, 32)
+    h = h.permute(1,0,2)                                                               # (B, 2, 32)
+    h = h.reshape(h.shape[0], -1)                                                      # (B, 64)
+    logits = self.classifier(h)                                                        # (B, 4)
     return logits
      
