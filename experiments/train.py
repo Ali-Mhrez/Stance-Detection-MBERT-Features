@@ -6,6 +6,7 @@ from ..models.bert_cnn import BERTCNN
 from ..models.bert_lstm import BERTLSTM
 from ..models.bert_cnn_lstm import BERTCNNLSTM
 from ..models.bert_lstm_cnn import BERTLSTMCNN
+from ..models.bert_ensemble import BERTENSEMBLE
 from torch.utils.data import DataLoader
 from ..data.custom_dataset import CustomDataset
 from transformers import AutoTokenizer, AutoModel
@@ -24,7 +25,7 @@ if __name__ == "__main__":
     
     parser = argparse.ArgumentParser(description="Run fine tuning experiments.")
     parser.add_argument('--dataset', type=str, choices=['arastance', 'unifiedfc'], required=True, help='Dataset to use for fine-tuning.')
-    parser.add_argument('--model-name', type=str, choices=['bertcnn', 'bertlstm', 'bertcnnlstm', 'bertlstmcnn'], required=True, help='Model name to use.')
+    parser.add_argument('--model-name', type=str, choices=['bertcnn', 'bertlstm', 'bertcnnlstm', 'bertlstmcnn', 'bertensemble'], required=True, help='Model name to use.')
     parser.add_argument('--setting', type=str, choices=['last-layer', 'last-4-layers'], required=True, help='BERT layer setting.')
     args = parser.parse_args()
     dataset = args.dataset
@@ -91,6 +92,8 @@ if __name__ == "__main__":
             model = BERTCNNLSTM(pretrained_model, setting)
         elif args.model_name == 'bertlstmcnn':
             model = BERTLSTMCNN(pretrained_model, sequence_length, setting)
+        elif args.model_name == 'bertensemble':
+            model = BERTENSEMBLE(pretrained_model, sequence_length, setting)
         loss_fn = torch.nn.CrossEntropyLoss()
         optimizer = AdamW(model.parameters(), lr=lr)
         manager = TrainingManager(model, optimizer, loss_fn, device)
