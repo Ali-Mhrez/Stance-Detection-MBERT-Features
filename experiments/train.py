@@ -88,7 +88,7 @@ if __name__ == "__main__":
         elif args.model_name == 'bertlstm':
             model = BERTLSTM(pretrained_model, setting)
         elif args.model_name == 'bertcnnlstm':
-            model = BERTCNNLSTM(pretrained_model, sequence_length, setting)
+            model = BERTCNNLSTM(pretrained_model, setting)
         elif args.model_name == 'bertlstmcnn':
             model = BERTLSTMCNN(pretrained_model, sequence_length, setting)
         loss_fn = torch.nn.CrossEntropyLoss()
